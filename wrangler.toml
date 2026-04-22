@@ -13,3 +13,6 @@ database_id = "c88d8935-05c0-467b-a671-38e4aed83427"
 # Environment variables (set these in Cloudflare Dashboard)
 [vars]
 ADMIN_TOKEN = "004004"
+
+[ai]
+binding = "AI"
