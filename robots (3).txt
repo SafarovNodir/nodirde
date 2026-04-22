@@ -1,0 +1,9 @@
+# robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap manzili (DOMAINNI TO'G'RILANG!)
+Sitemap: https://nodirdevv.uz/sitemap.xml
+
+# Crawl sozlamalari
+Crawl-delay: 5

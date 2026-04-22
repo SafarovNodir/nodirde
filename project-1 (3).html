@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script>
+const savedTheme = localStorage.getItem('nd-theme');
+if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('nd-lang') || 'uz';
+  document.querySelectorAll('[data-lang-uz], [data-lang-ru], [data-lang-en]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll(`[data-lang-${lang}]`).forEach(el => el.style.display = '');
+});
+</script>
+<title>PizzaUz — Restoran | NodirDev</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{ --tt:.55s cubic-bezier(.4,0,.2,1); }
+[data-theme="dark"]{ --bg:#060608; --surf:rgba(255,255,255,.028); --surf2:rgba(255,255,255,.052); --bdr:rgba(255,255,255,.07); --bdr-glow:rgba(140,110,255,.28); --txt:#e8eaff; --txt2:rgba(200,205,240,.52); --acc:#a78bfa; --acc2:#60a5fa; --nav-bg:rgba(6,6,8,.78); --nav-bdr:rgba(255,255,255,.055); --shad:rgba(0,0,0,.72); }
+[data-theme="light"]{ --bg:#f0eff9; --surf:rgba(255,255,255,.72); --surf2:rgba(255,255,255,.88); --bdr:rgba(100,80,200,.12); --bdr-glow:rgba(120,90,255,.22); --txt:#1a1730; --txt2:rgba(40,35,82,.58); --acc:#7c3aed; --acc2:#2563eb; --nav-bg:rgba(240,239,249,.82); --nav-bdr:rgba(120,100,200,.1); --shad:rgba(80,60,160,.12); }
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--txt); line-height:1.6; min-height:100vh; }
+a{ text-decoration:none; color:inherit; }
+.btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 30px; border-radius:50px; font-weight:700; font-size:14px; border:none; transition:all .35s; }
+.b-pri{ background:linear-gradient(135deg,var(--acc),var(--acc2)); color:#fff; }
+.b-pri:hover{ transform:translateY(-2px); }
+.b-out{ background:var(--surf); border:1.5px solid var(--bdr-glow); color:var(--txt); }
+.b-out:hover{ background:var(--surf2); }
+.hero{ padding:120px 0; }
+.w{ max-width:1280px; margin:0 auto; padding:0 32px; }
+.back-link{ display:inline-flex; align-items:center; gap:8px; color:var(--txt2); margin-bottom:32px; transition:color .25s; }
+.back-link:hover{ color:var(--acc); }
+.project-header{ margin-bottom:48px; }
+.project-header h1{ font-family:'Syne',sans-serif; font-size:clamp(36px,5vw,56px); font-weight:800; margin-bottom:16px; }
+.tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.tag{ background:rgba(124,58,237,.1); border:1px solid rgba(124,58,237,.15); padding:4px 12px; border-radius:20px; font-size:12px; color:var(--acc); font-weight:700; }
+.content{ background:var(--surf); border:1px solid var(--bdr); border-radius:24px; padding:48px; }
+.content h2{ font-family:'Syne',sans-serif; font-size:28px; font-weight:800; margin-bottom:24px; }
+.content p{ color:var(--txt2); margin-bottom:16px; line-height:1.8; }
+.content ul{ margin-left:24px; margin-bottom:16px; }
+.content li{ color:var(--txt2); margin-bottom:8px; }
+.footer{ text-align:center; padding:48px 0; color:var(--txt3); }
+@media(max-width:680px){ .w{ padding:0 20px; } .content{ padding:32px 24px; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="w">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> <span data-lang-uz>Orqaga qaytish</span><span data-lang-ru style="display:none;">Назад</span><span data-lang-en style="display:none;">Go back</span></a>
+    <div class="project-header">
+      <h1>🍕 PizzaUz — Restoran</h1>
+      <p style="color:var(--txt2); font-size:18px;"><span data-lang-uz>To'liq responsive restoran sayti. Onlayn buyurtma, menyu, filial xaritasi.</span><span data-lang-ru style="display:none;">Полностью адаптивный сайт ресторана. Онлайн-заказ, меню, карта.</span><span data-lang-en style="display:none;">Fully responsive restaurant site. Online order, menu, branch map.</span></p>
+      <div class="tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">API</span>
+        <span class="tag">Responsive</span>
+      </div>
+    </div>
+    <div class="content">
+      <h2><span data-lang-uz>Loyiha haqida</span><span data-lang-ru style="display:none;">О проекте</span><span data-lang-en style="display:none;">About the project</span></h2>
+      <p><span data-lang-uz>PizzaUz — zamonaviy restoran uchun to'liq veb-yechim. Sayt orqali mijozlar menyuni ko'rish, onlayn buyurtma berish va eng yaqin filialni topish imkoniyatiga ega.</span><span data-lang-ru style="display:none;">PizzaUz — полноценное веб-решение для современного ресторана. Клиенты могут смотреть меню, заказывать онлайн и находить ближайший филиал.</span><span data-lang-en style="display:none;">PizzaUz is a complete web solution for a modern restaurant. Customers can view the menu, order online, and find the nearest branch.</span></p>
+      <h2><span data-lang-uz>Xususiyatlar</span><span data-lang-ru style="display:none;">Особенности</span><span data-lang-en style="display:none;">Features</span></h2>
+      <ul>
+        <li><span data-lang-uz>Interaktiv menyu kategoriyalari</span><span data-lang-ru style="display:none;">Интерактивные категории меню</span><span data-lang-en style="display:none;">Interactive menu categories</span></li>
+        <li><span data-lang-uz>Onlayn buyurtma tizimi</span><span data-lang-ru style="display:none;">Система онлайн-заказов</span><span data-lang-en style="display:none;">Online ordering system</span></li>
+        <li><span data-lang-uz>Filial xaritasi integratsiyasi</span><span data-lang-ru style="display:none;">Интеграция карты филиалов</span><span data-lang-en style="display:none;">Branch map integration</span></li>
+        <li><span data-lang-uz>Mobil qurilmalarga moslashgan dizayn</span><span data-lang-ru style="display:none;">Адаптивный дизайн для мобильных устройств</span><span data-lang-en style="display:none;">Mobile-friendly design</span></li>
+        <li><span data-lang-uz>Tez yuklanadigan sahifalar</span><span data-lang-ru style="display:none;">Быстро загружаемые страницы</span><span data-lang-en style="display:none;">Fast loading pages</span></li>
+      </ul>
+      <h2><span data-lang-uz>Texnologiyalar</span><span data-lang-ru style="display:none;">Технологии</span><span data-lang-en style="display:none;">Technologies</span></h2>
+      <p>HTML5, CSS3, JavaScript, REST API integration, Google Maps API</p>
+      <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="index.html#form" class="btn b-pri"><i class="fas fa-paper-plane"></i> <span data-lang-uz>Buyurtma berish</span><span data-lang-ru style="display:none;">Заказать</span><span data-lang-en style="display:none;">Order</span></a>
+        <a href="index.html" class="btn b-out"><i class="fas fa-arrow-left"></i> <span data-lang-uz>Bosh sahifaga qaytish</span><span data-lang-ru style="display:none;">Вернуться на главную</span><span data-lang-en style="display:none;">Back to home</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="w">
+    <p>© 2026 NodirDev. <span data-lang-uz>Barcha huquqlar himoyalangan.</span><span data-lang-ru style="display:none;">Все права защищены.</span><span data-lang-en style="display:none;">All rights reserved.</span></p>
+  </div>
+</footer>
+</body>
+</html>
