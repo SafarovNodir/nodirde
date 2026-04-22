@@ -1941,7 +1941,7 @@ footer{
 
       <div class="cform rv fr">
         <h3 data-lang-uz>Loyiha Ma'lumotlari</h3><h3 data-lang-ru style="display:none;">Информация о проекте</h3><h3 data-lang-en style="display:none;">Project Information</h3>
-        <form id="form" name="contact-form" method="POST" action="/thank-you" data-netlify="true" netlify netlify-honeypot="bot-field">
+        <form id="form" name="contact-form" method="POST" action="/api/contact">
           <input type="hidden" name="form-name" value="contact-form" />
           <input type="hidden" name="bot-field" />
           <div class="f2c">
@@ -2133,14 +2133,14 @@ if (orderForm) {
     }
 
     try {
-      const response = await fetch('/', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodedData
+        body: formData
       });
 
-      if (!response.ok) throw new Error('Submit failed');
-      window.location.href = orderForm.getAttribute('action') || '/thank-you';
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'Submit failed');
+      window.location.href = '/thank-you';
     } catch (error) {
       if (statusEl) {
         statusEl.style.display = 'block';

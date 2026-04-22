@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | NodirDev</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{ --tt:.55s cubic-bezier(.4,0,.2,1); }
+
+[data-theme="dark"]{
+  --bg:        #060608;
+  --surf:      rgba(255,255,255,.028);
+  --surf2:     rgba(255,255,255,.052);
+  --bdr:       rgba(255,255,255,.07);
+  --bdr-glow:  rgba(140,110,255,.28);
+  --txt:       #e8eaff;
+  --txt2:      rgba(200,205,240,.52);
+  --txt3:      rgba(160,165,215,.32);
+  --acc:       #a78bfa;
+  --acc2:      #60a5fa;
+  --gold:      #fbbf24;
+  --grn:       #34d399;
+  --red:       #f87171;
+  --nav-bg:    rgba(6,6,8,.78);
+  --nav-bdr:   rgba(255,255,255,.055);
+  --shad:      rgba(0,0,0,.72);
+}
+
+[data-theme="light"]{
+  --bg:        #f0eff9;
+  --surf:      rgba(255,255,255,.72);
+  --surf2:     rgba(255,255,255,.88);
+  --bdr:       rgba(100,80,200,.12);
+  --bdr-glow:  rgba(120,90,255,.22);
+  --txt:       #1a1730;
+  --txt2:      rgba(40,35,82,.58);
+  --txt3:      rgba(60,50,120,.32);
+  --acc:       #7c3aed;
+  --acc2:      #2563eb;
+  --gold:      #d97706;
+  --grn:       #059669;
+  --red:       #dc2626;
+  --nav-bg:    rgba(240,239,249,.82);
+  --nav-bdr:   rgba(120,100,200,.1);
+  --shad:      rgba(80,60,160,.12);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg); color:var(--txt);
+  overflow-x:hidden;
+  transition:background var(--tt),color var(--tt);
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* Login Page */
+.login-container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:420px;
+  background:var(--surf);
+  border:1px solid var(--bdr);
+  border-radius:20px;
+  padding:48px 40px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 80px var(--shad);
+}
+
+.login-logo{
+  text-align:center;
+  margin-bottom:32px;
+}
+
+.login-logo h1{
+  font-family:'Syne',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+}
+
+.login-logo p{
+  font-size:14px;
+  color:var(--txt2);
+}
+
+.form-group{
+  margin-bottom:20px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:var(--txt2);
+  margin-bottom:8px;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px 18px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--bdr);
+  border-radius:12px;
+  color:var(--txt);
+  font-size:15px;
+  font-family:inherit;
+  transition:all .3s;
+}
+
+[data-theme="light"] .form-group input{
+  background:rgba(255,255,255,.72);
+}
+
+.form-group input:focus{
+  outline:none;
+  border-color:var(--acc);
+  background:rgba(124,58,237,.04);
+  box-shadow:0 0 0 3px rgba(124,58,237,.08);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 28px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:700;
+  transition:all .3s;
+  border:none;
+  cursor:pointer;
+  font-family:inherit;
+}
+
+.btn-primary{
+  width:100%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  box-shadow:0 4px 24px rgba(124,58,237,.3);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(124,58,237,.48);
+}
+
+.error-msg{
+  color:var(--red);
+  font-size:13px;
+  margin-top:12px;
+  text-align:center;
+  display:none;
+}
+
+/* Admin Dashboard */
+.admin-container{
+  display:none;
+  min-height:100vh;
+}
+
+/* Sidebar */
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:260px;
+  height:100vh;
+  background:var(--surf);
+  border-right:1px solid var(--bdr);
+  padding:24px 0;
+  z-index:100;
+}
+
+.sidebar-header{
+  padding:0 24px 24px;
+  border-bottom:1px solid var(--bdr);
+  margin-bottom:16px;
+}
+
+.sidebar-header h2{
+  font-family:'Syne',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.sidebar-header p{
+  font-size:12px;
+  color:var(--txt2);
+  margin-top:4px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 24px;
+  color:var(--txt2);
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .3s;
+  border-left:3px solid transparent;
+}
+
+.nav-item:hover,
+.nav-item.active{
+  color:var(--acc);
+  background:var(--surf2);
+  border-left-color:var(--acc);
+}
+
+.nav-item i{
+  width:20px;
+  text-align:center;
+}
+
+.sidebar-footer{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:16px 24px;
+  border-top:1px solid var(--bdr);
+}
+
+.logout-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  padding:12px 16px;
+  background:transparent;
+  border:1px solid var(--bdr);
+  border-radius:10px;
+  color:var(--txt2);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .3s;
+  font-family:inherit;
+}
+
+.logout-btn:hover{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+
+/* Main Content */
+.main-content{
+  margin-left:260px;
+  padding:32px 40px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:32px;
+}
+
+.header h1{
+  font-family:'Syne',sans-serif;
+  font-size:28px;
+  font-weight:800;
+}
+
+.header-stats{
+  display:flex;
+  gap:16px;
+}
+
+.stat-card{
+  background:var(--surf);
+  border:1px solid var(--bdr);
+  border-radius:14px;
+  padding:16px 24px;
+  text-align:center;
+  min-width:120px;
+}
+
+.stat-number{
+  font-family:'Syne',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  color:var(--acc);
+}
+
+.stat-label{
+  font-size:12px;
+  color:var(--txt2);
+  margin-top:4px;
+}
+
+/* Messages Table */
+.messages-section{
+  background:var(--surf);
+  border:1px solid var(--bdr);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 28px;
+  border-bottom:1px solid var(--bdr);
+}
+
+.section-header h3{
+  font-family:'Syne',sans-serif;
+  font-size:18px;
+  font-weight:700;
+}
+
+.refresh-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 18px;
+  background:var(--surf2);
+  border:1px solid var(--bdr);
+  border-radius:10px;
+  color:var(--txt2);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .3s;
+  font-family:inherit;
+}
+
+.refresh-btn:hover{
+  background:var(--acc);
+  border-color:var(--acc);
+  color:#fff;
+}
+
+.messages-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.messages-table th{
+  text-align:left;
+  padding:16px 28px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--txt3);
+  border-bottom:1px solid var(--bdr);
+}
+
+.messages-table td{
+  padding:20px 28px;
+  font-size:14px;
+  border-bottom:1px solid var(--bdr);
+  color:var(--txt);
+}
+
+.messages-table tr:hover{
+  background:var(--surf2);
+}
+
+.messages-table tr.unread{
+  background:rgba(124,58,237,.08);
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.badge-new{
+  background:var(--acc);
+  color:#fff;
+}
+
+.badge-read{
+  background:var(--surf2);
+  color:var(--txt2);
+  border:1px solid var(--bdr);
+}
+
+.type-badge{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.type-landing{
+  background:rgba(167,139,250,.2);
+  color:var(--acc);
+}
+
+.type-corporate{
+  background:rgba(96,165,250,.2);
+  color:var(--acc2);
+}
+
+.type-shop{
+  background:rgba(251,191,36,.2);
+  color:var(--gold);
+}
+
+.type-other{
+  background:var(--surf2);
+  color:var(--txt2);
+}
+
+.action-btns{
+  display:flex;
+  gap:8px;
+}
+
+.action-btn{
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--surf2);
+  border:1px solid var(--bdr);
+  border-radius:8px;
+  color:var(--txt2);
+  font-size:14px;
+  cursor:pointer;
+  transition:all .3s;
+}
+
+.action-btn:hover{
+  background:var(--acc);
+  border-color:var(--acc);
+  color:#fff;
+}
+
+.action-btn.delete:hover{
+  background:var(--red);
+  border-color:var(--red);
+}
+
+/* Message Detail Modal */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:20px;
+}
+
+.modal-overlay.active{
+  display:flex;
+}
+
+.modal-content{
+  width:100%;
+  max-width:600px;
+  background:var(--surf);
+  border:1px solid var(--bdr);
+  border-radius:20px;
+  padding:32px;
+  max-height:90vh;
+  overflow-y:auto;
+}
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:24px;
+}
+
+.modal-header h3{
+  font-family:'Syne',sans-serif;
+  font-size:22px;
+  font-weight:800;
+}
+
+.modal-close{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--surf2);
+  border:1px solid var(--bdr);
+  border-radius:10px;
+  color:var(--txt2);
+  font-size:18px;
+  cursor:pointer;
+  transition:all .3s;
+}
+
+.modal-close:hover{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+
+.modal-body p{
+  margin-bottom:16px;
+  font-size:15px;
+}
+
+.modal-body strong{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--txt3);
+  margin-bottom:6px;
+}
+
+.modal-body .message-text{
+  background:var(--surf2);
+  border:1px solid var(--bdr);
+  border-radius:12px;
+  padding:20px;
+  font-size:15px;
+  line-height:1.7;
+  margin-top:16px;
+}
+
+/* Empty State */
+.empty-state{
+  text-align:center;
+  padding:60px 20px;
+}
+
+.empty-state i{
+  font-size:48px;
+  color:var(--txt3);
+  margin-bottom:16px;
+}
+
+.empty-state h4{
+  font-family:'Syne',sans-serif;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.empty-state p{
+  color:var(--txt2);
+}
+
+/* Loading */
+.loading{
+  display:none;
+  text-align:center;
+  padding:40px;
+}
+
+.loading.active{
+  display:block;
+}
+
+.spinner{
+  width:40px;
+  height:40px;
+  border:3px solid var(--bdr);
+  border-top-color:var(--acc);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:0 auto 16px;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
+
+/* Theme Toggle */
+.theme-toggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:50px;
+  height:26px;
+  background:var(--surf2);
+  border:1px solid var(--bdr);
+  border-radius:13px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  padding:3px;
+  z-index:200;
+}
+
+.theme-toggle-circle{
+  width:20px;
+  height:20px;
+  background:var(--acc);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  color:#fff;
+  transition:transform .3s;
+}
+
+[data-theme="dark"] .theme-toggle-circle{
+  transform:translateX(24px);
+}
+
+/* Responsive */
+@media(max-width:1024px){
+  .sidebar{
+    transform:translateX(-100%);
+  }
+  .main-content{
+    margin-left:0;
+    padding:100px 20px 20px;
+  }
+  .messages-table{
+    display:block;
+    overflow-x:auto;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle" onclick="toggleTheme()">
+  <div class="theme-toggle-circle">
+    <i class="fas fa-sun" style="display:none;" data-theme-icon="light"></i>
+    <i class="fas fa-moon" data-theme-icon="dark"></i>
+  </div>
+</div>
+
+<!-- Login Page -->
+<div class="login-container" id="loginPage">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>NodirDev</h1>
+      <p>Admin Panel</p>
+    </div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Maxfiy Token</label>
+        <input type="password" id="tokenInput" placeholder="Tokenni kiriting..." required>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-lock"></i> Kirish
+      </button>
+      <p class="error-msg" id="loginError">Noto'g'ri token</p>
+    </form>
+  </div>
+</div>
+
+<!-- Admin Dashboard -->
+<div class="admin-container" id="adminPage">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>NodirDev</h2>
+      <p>Admin Panel</p>
+    </div>
+    <nav>
+      <div class="nav-item active">
+        <i class="fas fa-envelope"></i>
+        <span>Xabarlar</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Chiqish</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="header">
+      <h1>Xabarlar</h1>
+      <div class="header-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="totalCount">0</div>
+          <div class="stat-label">Jami</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="unreadCount">0</div>
+          <div class="stat-label">Yangi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="messages-section">
+      <div class="section-header">
+        <h3>Barcha xabarlar</h3>
+        <button class="refresh-btn" onclick="loadMessages()">
+          <i class="fas fa-sync-alt"></i> Yangilash
+        </button>
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Yuklanmoqda...</p>
+      </div>
+
+      <table class="messages-table" id="messagesTable">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Ism</th>
+            <th>Telefon</th>
+            <th>Turi</th>
+            <th>Sana</th>
+            <th>Amallar</th>
+          </tr>
+        </thead>
+        <tbody id="messagesBody">
+          <!-- Messages will be loaded here -->
+        </tbody>
+      </table>
+
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <i class="fas fa-inbox"></i>
+        <h4>Xabarlar yo'q</h4>
+        <p>Hozircha yangi xabarlar mavjud emas</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Message Detail Modal -->
+<div class="modal-overlay" id="messageModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Xabar tafsilotlari</h3>
+      <button class="modal-close" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Message details will be loaded here -->
+    </div>
+  </div>
+</div>
+
+<script>
+// API Configuration
+const API_URL = '/api/messages';
+
+// State
+let authToken = localStorage.getItem('admin_token');
+let messages = [];
+
+// Theme Toggle
+function toggleTheme(){
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  updateThemeIcons(next);
+}
+
+function updateThemeIcons(theme){
+  document.querySelectorAll('[data-theme-icon]').forEach(icon => {
+    icon.style.display = icon.getAttribute('data-theme-icon') === theme ? 'block' : 'none';
+  });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Load saved theme
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcons(savedTheme);
+
+  // Check auth
+  if(authToken){
+    showAdminPage();
+    loadMessages();
+  }
+});
+
+// Login
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const token = tokenInput.value.trim();
+  
+  // Verify token by trying to load messages
+  authToken = token;
+  const success = await loadMessages();
+  
+  if(success){
+    localStorage.setItem('admin_token', token);
+    showAdminPage();
+    loginError.style.display = 'none';
+  } else {
+    authToken = null;
+    loginError.style.display = 'block';
+  }
+});
+
+function showAdminPage(){
+  loginPage.style.display = 'none';
+  adminPage.style.display = 'block';
+}
+
+function logout(){
+  localStorage.removeItem('admin_token');
+  authToken = null;
+  location.reload();
+}
+
+// Load Messages
+async function loadMessages(){
+  loading.classList.add('active');
+  messagesTable.style.display = 'none';
+  emptyState.style.display = 'none';
+  
+  try {
+    const response = await fetch(API_URL, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+    
+    const data = await response.json();
+    
+    if(!data.success){
+      throw new Error(data.error);
+    }
+    
+    messages = data.messages || [];
+    renderMessages();
+    updateStats();
+    
+    loading.classList.remove('active');
+    return true;
+    
+  } catch(error){
+    console.error('Error loading messages:', error);
+    loading.classList.remove('active');
+    return false;
+  }
+}
+
+function renderMessages(){
+  const tbody = document.getElementById('messagesBody');
+  
+  if(messages.length === 0){
+    messagesTable.style.display = 'none';
+    emptyState.style.display = 'block';
+    return;
+  }
+  
+  messagesTable.style.display = 'table';
+  emptyState.style.display = 'none';
+  
+  tbody.innerHTML = messages.map(msg => `
+    <tr class="${msg.read ? '' : 'unread'}">
+      <td>
+        <span class="badge ${msg.read ? 'badge-read' : 'badge-new'}">
+          ${msg.read ? 'O\'qilgan' : 'Yangi'}
+        </span>
+      </td>
+      <td><strong>${escapeHtml(msg.name)}</strong></td>
+      <td>${escapeHtml(msg.phone)}</td>
+      <td><span class="type-badge ${getTypeClass(msg.type)}">${escapeHtml(msg.type)}</span></td>
+      <td>${formatDate(msg.timestamp)}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-btn" onclick="viewMessage(${msg.id})" title="Ko'rish">
+            <i class="fas fa-eye"></i>
+          </button>
+          ${!msg.read ? `
+          <button class="action-btn" onclick="markAsRead(${msg.id})" title="O'qilgan deb belgilash">
+            <i class="fas fa-check"></i>
+          </button>
+          ` : ''}
+          <button class="action-btn delete" onclick="deleteMessage(${msg.id})" title="O'chirish">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updateStats(){
+  document.getElementById('totalCount').textContent = messages.length;
+  document.getElementById('unreadCount').textContent = messages.filter(m => !m.read).length;
+}
+
+function getTypeClass(type){
+  const classes = {
+    'Landing Page': 'type-landing',
+    'Korporativ sayt': 'type-corporate',
+    'Internet-magazin': 'type-shop'
+  };
+  return classes[type] || 'type-other';
+}
+
+function formatDate(timestamp){
+  const date = new Date(timestamp);
+  return date.toLocaleDateString('uz-UZ', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+function escapeHtml(text){
+  if(!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// View Message
+function viewMessage(id){
+  const msg = messages.find(m => m.id === id);
+  if(!msg) return;
+  
+  const modalBody = document.getElementById('modalBody');
+  modalBody.innerHTML = `
+    <p><strong>Ism:</strong> ${escapeHtml(msg.name)}</p>
+    <p><strong>Telefon:</strong> ${escapeHtml(msg.phone)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(msg.email) || '-'}</p>
+    <p><strong>Sayt turi:</strong> <span class="type-badge ${getTypeClass(msg.type)}">${escapeHtml(msg.type)}</span></p>
+    <p><strong>Sana:</strong> ${formatDate(msg.timestamp)}</p>
+    <div class="message-text">
+      <strong>Xabar:</strong><br>
+      ${escapeHtml(msg.message)}
+    </div>
+  `;
+  
+  document.getElementById('messageModal').classList.add('active');
+  
+  // Mark as read if unread
+  if(!msg.read){
+    markAsRead(id);
+  }
+}
+
+function closeModal(){
+  document.getElementById('messageModal').classList.remove('active');
+}
+
+// Mark as Read
+async function markAsRead(id){
+  try {
+    const response = await fetch(`${API_URL}?id=${id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+    
+    const data = await response.json();
+    
+    if(data.success){
+      const msg = messages.find(m => m.id === id);
+      if(msg){
+        msg.read = 1;
+        renderMessages();
+        updateStats();
+      }
+    }
+  } catch(error){
+    console.error('Error marking as read:', error);
+  }
+}
+
+// Delete Message
+async function deleteMessage(id){
+  if(!confirm('Ushbu xabarni o\'chirishni xohlaysizmi?')) return;
+  
+  try {
+    const response = await fetch(`${API_URL}?id=${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+    
+    const data = await response.json();
+    
+    if(data.success){
+      messages = messages.filter(m => m.id !== id);
+      renderMessages();
+      updateStats();
+    }
+  } catch(error){
+    console.error('Error deleting message:', error);
+  }
+}
+
+// Close modal on overlay click
+document.getElementById('messageModal').addEventListener('click', (e) => {
+  if(e.target.id === 'messageModal'){
+    closeModal();
+  }
+});
+</script>
+
+</body>
+</html>
