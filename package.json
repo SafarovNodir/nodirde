@@ -1,0 +1,11 @@
+{
+  "name": "nodirde",
+  "version": "1.0.0",
+  "description": "NodirDev portfolio website",
+  "scripts": {
+    "deploy": "wrangler pages deploy ."
+  },
+  "devDependencies": {
+    "wrangler": "^4.84.1"
+  }
+}
